@@ -11,7 +11,7 @@ export default function ListDevice() {
     status: "Pending",
   });
 
-  const [editID, setEditId] = useState(null);
+  const [editId, setEditId] = useState(null);
   const [editFormData, setEditFormData] = useState({
     name: "",
     assetCode: "",
@@ -22,6 +22,7 @@ export default function ListDevice() {
 
   const [devices, setDevices] = useState([
     {
+      id: 1,
       name: "HP",
       assetCode: "001",
       category: "Laptop",
@@ -29,6 +30,7 @@ export default function ListDevice() {
       status: "Active",
     },
     {
+      id: 2,
       name: "Dell Monitor",
       assetCode: "002",
       category: "PC",
@@ -38,6 +40,15 @@ export default function ListDevice() {
   ]);
 
   const saveDevice = () => {
+    if (
+      newDevice.name.trim() === "" ||
+      newDevice.assetCode.trim() === "" ||
+      newDevice.category.trim() === "" ||
+      newDevice.user.trim() === ""
+    ) {
+      alert("WOI DI ISI SEMUA DULU KOCAK.");
+      return;
+    }
     if (editId !== null) {
       const updatedDevices = devices.map((device) =>
         device.id === editId ? { ...newDevice, id: editId } : device
@@ -88,7 +99,6 @@ export default function ListDevice() {
   };
 
   return (
-    <div className="p-8 w-full min-h-screen bg-[#F5F7FA]">
       <div className="bg-slate-100 rounded-3xl shadow-sm border border-gray-200 p-8">
 
         {/* Header */}
@@ -251,7 +261,7 @@ export default function ListDevice() {
                       </button>
 
                       <button
-                        onclick={() => handleDelete(device.id)}
+                        onClick={() => handleDelete(device.id)}
                         className="cursore-pointer text-red-600 hover:text-red-800 font-medium hover:underline flex items-center gap-1"
                       >
                         Delete
@@ -264,6 +274,5 @@ export default function ListDevice() {
           </table>
         </div>
       </div>
-    </div>
   );
 }
