@@ -49,7 +49,7 @@ export default function ListDevice() {
       alert("WOI DI ISI SEMUA DULU KOCAK.");
       return;
     }
-      setDevices([...devices, { ...newDevice, id: Date.now() }]);
+    setDevices([...devices, { ...newDevice, id: Date.now() }]);
 
     setNewDevice({
       name: "",
@@ -105,7 +105,17 @@ export default function ListDevice() {
     }
   };
 
+const baseInputClass = `border rounded-xl px-4 py-3 bg-white outline-none focus:ring-2 focus:ring-blue-500 transition`;
+
   return (
+    <div className="p-8 w-full min-h-screen bg-[F5F7FA] relative">
+      {editId !== null && (
+      <div
+        className="fixed inset-0 bg-black/20 backdrop-blur-md z-40 transition-all duratione-500 ease-out"
+        onClick={handleCancelEdit} 
+        />
+      )}
+
     <div className="bg-slate-100 rounded-3xl shadow-sm border border-gray-200 p-8">
 
       {/* Header */}
@@ -129,6 +139,7 @@ export default function ListDevice() {
           placeholder="🔍Search Username..."
           value={searchUser}
           onChange={(e) => setSearchUser(e.target.value)}
+          disabled={editId !== null}
           className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white"
         />
       </section>
@@ -143,24 +154,24 @@ export default function ListDevice() {
               placeholder="Device Name"
               value={newDevice.name}
               onChange={(e) =>
-                setNewDevice({ ...newDevice, name: e.target.value })
-              }
+                setNewDevice({ ...newDevice, name: e.target.value })}
+              disabled={editId !== null}
               className="border rounded-xl px-4 py-3 bg-white"
             />
             <input
               placeholder="Asset Code"
               value={newDevice.assetCode}
               onChange={(e) =>
-                setNewDevice({ ...newDevice, assetCode: e.target.value })
-              }
+                setNewDevice({ ...newDevice, assetCode: e.target.value })}
+              disabled={editId !== null}
               className="border rounded-xl px-4 py-3 bg-white"
             />
             <input
               placeholder="Assigned User"
               value={newDevice.user}
               onChange={(e) =>
-                setNewDevice({ ...newDevice, user: e.target.value })
-              }
+                setNewDevice({ ...newDevice, user: e.target.value })}
+              disabled={editId !== null}
               className="border rounded-xl px-4 py-3 bg-white"
             />
           </div>
@@ -170,6 +181,7 @@ export default function ListDevice() {
             <select
               value={newDevice.category}
               onChange={(e) => setNewDevice({ ...newDevice, category: e.target.value })}
+              disabled={editId !== null}
               className="cursor-pointer w-44 border rounded-xl px-4 py-3 bg-white"
             >
               <option value="" disabled style={{ display: "none" }}>
@@ -184,6 +196,7 @@ export default function ListDevice() {
             <select
               value={newDevice.status}
               onChange={(e) => setNewDevice({ ...newDevice, status: e.target.value })}
+              disabled={editId !== null}
               className="cursor-pointer w-44 border rounded-xl px-4 py-3 bg-white"
             >
               <option value="Pending">Pending</option>
@@ -197,10 +210,11 @@ export default function ListDevice() {
         <div className="mt-4 flex justify-end">
           <button
             onClick={saveDevice}
+            disabled={editId !== null}
             className="cursor-pointer px-6 py-3 rounded-xl font-semibold shadow-sm transition text-white bg-blue-600 hover:bg-blue-700"
           >
             ➕ Add Device
-            </button>
+          </button>
         </div>
       </section>
 
@@ -220,9 +234,10 @@ export default function ListDevice() {
             {filteredDevices.map((device, index) => (
               <tr
                 key={device.id || index}
-                className={`transition-all duration-300 ${editId === device.id
-                  ? "bg-blue-100 border-y-2 border-blue-500"
-                  : "border-b hover:bg-gray-300"
+                className={`transition-all duration-500 ease-out group ${
+                  editId === device.id
+                  ? "relative z-50 bg-white shadow-md-[0_0_30px_rgba(0,0,0,0.15)] scale-[1.02] ring-2 ring-blue-500 rounded-lg"
+                  : "border-b hover:bg-gray-50"
                   }`}
               >
                 {editId === device.id ? (
@@ -253,7 +268,7 @@ export default function ListDevice() {
                       <select
                         value={editFormData.category}
                         onChange={(e) => setEditFormData({ ...editFormData, category: e.target.value })}
-                        className="w-full border border-gray-300 rounded-lg px-2 py-1.5 bg-white cursor-pointer outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full min-w-[120px] pr-8 border border-gray-300 rounded-lg px-2 py-1.5 bg-white cursor-pointer outline-none focus:ring-2 focus:ring-blue-500"
                       >
                         <option value="Laptop">Laptop</option>
                         <option value="Desktop">Desktop</option>
@@ -265,7 +280,7 @@ export default function ListDevice() {
                       <select
                         value={editFormData.status}
                         onChange={(e) => setEditFormData({ ...editFormData, status: e.target.value })}
-                        className="w-full border border-gray-300 rounded-lg px-2 py-1.5 bg-white cursor-pointer outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full min-w-[120px] pr-8 border border-gray-300 rounded-lg px-2 py-1.5 bg-white cursor-pointer outline-none focus:ring-2 focus:ring-blue-500"
                       >
                         <option value="Pending">Pending</option>
                         <option value="Available">Available</option>
@@ -307,12 +322,14 @@ export default function ListDevice() {
                       <div className="flex justify-center gap-4">
                         <button
                           onClick={() => handleEdit(device)}
+                          disabled={editId !== null}
                           className="cursor-pointer text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1"
                         >
                           ✏ Edit
                         </button>
                         <button
                           onClick={() => handleDelete(device.id)}
+                          disabled={editId !== null}
                           className="cursor-pointer text-red-600 hover:text-red-800 font-medium flex items-center gap-1"
                         >
                           🗑 Delete
@@ -334,6 +351,7 @@ export default function ListDevice() {
           </tbody>
         </table>
       </div>
+    </div>
     </div>
   );
 }
