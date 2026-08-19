@@ -109,7 +109,7 @@ export default function ListDevice() {
         />
       )}
 
-      <div className="bg-slate-100 rounded-3xl shadow-sm border border-gray-200 p-8">
+      <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-6">
 
         {/* Header */}
         <section className="mb-10">
@@ -117,7 +117,7 @@ export default function ListDevice() {
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-3xl font-bold">Device Management</h1>
-              <p className="text-gray-500">Manage company devices and assets</p>
+              <p className="text-gray-500 font-medium mt-1">Manage company devices and assets</p>
             </div>
             <div className="bg-blue-50 text-blue-700 px-5 py-3 rounded-2xl font-semibold border border-blue-200">
               {devices.length} Devices
@@ -214,7 +214,7 @@ export default function ListDevice() {
         {/* Table */}
         <div className="overflow-hidden rounded-xl border">
           <table className="w-full" style={{ borderCollapse: "separate", borderSpacing: "0" }}>
-            <thead className="bg-slate-50">
+            <thead className="bg-white">
               <tr>
                 <th className="px-6 py-4 text-left rounded-tl-lg">Device</th>
                 <th className="px-6 py-4 text-left" >User</th>
@@ -229,7 +229,7 @@ export default function ListDevice() {
                   key={device.id || index}
                   className={`transition-all duration-500 ease-out group ${editId === device.id
                       ? "relative z-50 bg-white shadow-md-[0_0_30px_rgba(0,0,0,0.15)] scale-[1.02] ring-2 ring-blue-500 rounded-lg"
-                      : "border-b hover:bg-gray-50"
+                      : "border-b hover:bg-blue-50"
                     }`}
                 >
                   {editId === device.id ? (
